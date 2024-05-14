@@ -3,9 +3,11 @@ import { books, authors, genres, BOOKS_PER_PAGE } from './data.js'
 let page = 1;
 let matches = books
 
-const starting = document.createDocumentFragment()
 
-const addBooksToHtml = () => {
+
+//ADDS THE BOOKS IN HTML & DISPLAY THEM
+const displayBooksToHtml = () => {
+    const starting = document.createDocumentFragment()//it allows multiple inserts at the same time on the DOM
     for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
         const element = document.createElement('button')
         element.classList = 'preview'
@@ -21,18 +23,17 @@ const addBooksToHtml = () => {
                 <h3 class="preview__title">${title}</h3>
                 <div class="preview__author">${authors[author]}</div>
             </div>
-        `
+        `;
     
         starting.appendChild(element)
     }
+    document.querySelector('[data-list-items]').appendChild(starting)
 }
-addBooksToHtml()
+displayBooksToHtml()
 
-
-
-
-document.querySelector('[data-list-items]').appendChild(starting)
-
+const displayBooksByGenre = () => {
+    
+}
 const genreHtml = document.createDocumentFragment()
 const firstGenreElement = document.createElement('option')
 firstGenreElement.value = 'any'
