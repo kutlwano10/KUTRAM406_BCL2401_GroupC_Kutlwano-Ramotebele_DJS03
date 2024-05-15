@@ -5,11 +5,12 @@ let matches = books;
 
 const getHtml = {
     dataListItems : document.querySelector("[data-list-items]"),
-    searchGenre : document.querySelector("[data-search-genres]")
+    searchGenre : document.querySelector("[data-search-genres]"),
+    listButton: document.querySelector("[data-list-button]")
 }
 
 //ADDS THE BOOKS IN HTML & DISPLAY THEM
-const displayBooksToHtml = () => {
+const initializeBooks = () => {
   const starting = document.createDocumentFragment(); //it allows multiple inserts at the same time on the DOM
   for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
     const element = document.createElement("button");
@@ -32,7 +33,7 @@ const displayBooksToHtml = () => {
   }
   getHtml.dataListItems.appendChild(starting);
 };
-displayBooksToHtml();
+
 
 //Books by Genre
 const displayBooksByGenre = () => {
@@ -51,8 +52,8 @@ const displayBooksByGenre = () => {
 
   getHtml.searchGenre.appendChild(genreHtml);
 };
-displayBooksByGenre();
 
+//Books by Author
 const authorsHtml = document.createDocumentFragment();
 const firstAuthorElement = document.createElement("option");
 firstAuthorElement.value = "any";
@@ -87,20 +88,23 @@ const changeThemes = () => {
 }
 
 
-document.querySelector("[data-list-button]").innerText = `Show more (${
-  books.length - BOOKS_PER_PAGE
-})`;
-document.querySelector("[data-list-button]").disabled =
-  matches.length - page * BOOKS_PER_PAGE > 0;
-
-document.querySelector("[data-list-button]").innerHTML = `
-    <span>Show more</span>
-    <span class="list__remaining"> (${
-      matches.length - page * BOOKS_PER_PAGE > 0
-        ? matches.length - page * BOOKS_PER_PAGE
-        : 0
-    })</span>
-`;
+const initializeMoreBooksButton = () => {
+    getHtml.listButton.innerText = `Show more (${
+        books.length - BOOKS_PER_PAGE
+      })`;//show more button
+      
+      getHtml.listButton.disabled =
+        matches.length - page * BOOKS_PER_PAGE > 0;
+      
+      getHtml.listButton.innerHTML = `
+          <span>Show more</span>
+          <span class="list__remaining"> (${
+            matches.length - page * BOOKS_PER_PAGE > 0
+              ? matches.length - page * BOOKS_PER_PAGE
+              : 0
+          })</span>
+      `;
+}
 
 document.querySelector("[data-search-cancel]").addEventListener("click", () => {
   document.querySelector("[data-search-overlay]").open = false;
@@ -235,6 +239,7 @@ document
     document.querySelector("[data-search-overlay]").open = false;
   });
 
+  //When button clicked
 document.querySelector("[data-list-button]").addEventListener("click", () => {
   const fragment = document.createDocumentFragment();
 
@@ -298,3 +303,9 @@ document
         active.description;
     }
   });
+
+  const main = () => {
+    initializeBooks();
+    initializeMoreBooksButton()
+  }
+  main()
