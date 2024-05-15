@@ -14,7 +14,9 @@ const getHtml = {
     headerSearchButton : document.querySelector("[data-header-search]"),
     headerSettingButton : document.querySelector("[data-header-settings]"),
     closePreviousButton : document.querySelector("[data-list-close]"),
-    bookPreview: document.querySelector("[data-list-active]")
+    bookPreview : document.querySelector("[data-list-active]"),
+    saveSettingsFormButton : document.querySelector("[data-settings-form]"),
+    saveSearchButton : document.querySelector("[data-search-form]")
 }
 
 //ADDS THE BOOKS IN HTML & DISPLAY THEM
@@ -60,7 +62,7 @@ const displayBooksByGenre = () => {
 
   getHtml.searchGenre.appendChild(genreHtml);
 };
-
+displayBooksByGenre()
 //Books by Author
 const authorsHtml = document.createDocumentFragment();
 const firstAuthorElement = document.createElement("option");
@@ -114,7 +116,7 @@ const initializeMoreBooksButton = () => {
       `;
 }
 
-//
+
 const cancelSearchOverlay =()=> {
     getHtml.searchOverlay.open = false;//CLOSE
 
@@ -142,13 +144,14 @@ const EventListeners =()=> {
     getHtml.headerSearchButton.addEventListener('click', openSearchOverlay)
     getHtml.headerSettingButton.addEventListener('click', openSettingOverlay)
     getHtml.closePreviousButton.addEventListener('click', closeBookPreview)
+    getHtml.saveSettingsFormButton.addEventListener('submit', saveSettingsForm),
+    getHtml.saveSearchButton.addEventListener('submit', saveSearchForm)
+
 }
 
+const saveSettingsForm = (event) => {
+    event.preventDefault()
 
-document
-  .querySelector("[data-settings-form]")
-  .addEventListener("submit", (event) => {
-    event.preventDefault();
     const formData = new FormData(event.target);
     const { theme } = Object.fromEntries(formData);
 
@@ -166,13 +169,12 @@ document
       );
     }
 
-    document.querySelector("[data-settings-overlay]").open = false;
-  });
+    getHtml.settingOverlay.open = false;
+}
 
-document
-  .querySelector("[data-search-form]")
-  .addEventListener("submit", (event) => {
+const saveSearchForm = (event) => {
     event.preventDefault();
+
     const formData = new FormData(event.target);
     const filters = Object.fromEntries(formData);
     const result = [];
@@ -250,8 +252,9 @@ document
     `;
 
     window.scrollTo({ top: 0, behavior: "smooth" });
-    document.querySelector("[data-search-overlay]").open = false;
-  });
+    getHtml.searchOverlay.open = false;
+} 
+
 
   //When button clicked
 document.querySelector("[data-list-button]").addEventListener("click", () => {
