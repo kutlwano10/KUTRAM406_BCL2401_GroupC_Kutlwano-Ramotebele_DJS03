@@ -6,7 +6,9 @@ let matches = books;
 const getHtml = {
     dataListItems : document.querySelector("[data-list-items]"),
     searchGenre : document.querySelector("[data-search-genres]"),
-    listButton: document.querySelector("[data-list-button]")
+    listButton : document.querySelector("[data-list-button]"),
+    cancelSearchButton : document.querySelector("[data-search-cancel]"),
+    searchOverlay : document.querySelector("[data-search-overlay]"),
 }
 
 //ADDS THE BOOKS IN HTML & DISPLAY THEM
@@ -106,9 +108,17 @@ const initializeMoreBooksButton = () => {
       `;
 }
 
-document.querySelector("[data-search-cancel]").addEventListener("click", () => {
-  document.querySelector("[data-search-overlay]").open = false;
-});
+const cancelSearchModal =()=> {
+    getHtml.searchOverlay.open = false;
+
+}
+const EventListeners =()=> {
+    getHtml.cancelSearchButton.addEventListener('click', cancelSearchModal)
+}
+
+// document.querySelector("[data-search-cancel]").addEventListener("click", () => {
+//   document.querySelector("[data-search-overlay]").open = false;
+// });
 
 document
   .querySelector("[data-settings-cancel]")
@@ -306,6 +316,7 @@ document
 
   const main = () => {
     initializeBooks();
-    initializeMoreBooksButton()
+    initializeMoreBooksButton();
+    EventListeners()
   }
   main()
