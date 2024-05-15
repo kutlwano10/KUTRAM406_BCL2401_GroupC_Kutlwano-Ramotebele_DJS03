@@ -13,6 +13,8 @@ const getHtml = {
     cancelSettingButton : document.querySelector("[data-settings-cancel]"),
     headerSearchButton : document.querySelector("[data-header-search]"),
     headerSettingButton : document.querySelector("[data-header-settings]"),
+    closePreviousButton : document.querySelector("[data-list-close]"),
+    bookPreview: document.querySelector("[data-list-active]")
 }
 
 //ADDS THE BOOKS IN HTML & DISPLAY THEM
@@ -129,6 +131,9 @@ const openSettingOverlay = () => {
     getHtml.settingOverlay.open = true;
 
 }
+const closeBookPrevious = () => {
+    getHtml.bookPreview.open = false;
+}
 
 //ALL CLICKED BUTTONS
 const EventListeners =()=> {
@@ -136,12 +141,9 @@ const EventListeners =()=> {
     getHtml.cancelSettingButton.addEventListener('click', calcelSettingOverlay)
     getHtml.headerSearchButton.addEventListener('click', openSearchOverlay)
     getHtml.headerSettingButton.addEventListener('click', openSettingOverlay)
+    getHtml.closePreviousButton.addEventListener('click', closeBookPrevious)
 }
 
-
-document.querySelector("[data-list-close]").addEventListener("click", () => {
-  document.querySelector("[data-list-active]").open = false;
-});
 
 document
   .querySelector("[data-settings-form]")
