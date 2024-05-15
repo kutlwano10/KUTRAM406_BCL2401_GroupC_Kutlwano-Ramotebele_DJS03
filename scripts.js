@@ -12,6 +12,7 @@ const getHtml = {
     settingOverlay : document.querySelector("[data-settings-overlay]"),
     cancelSettingButton : document.querySelector("[data-settings-cancel]"),
     headerSearchButton : document.querySelector("[data-header-search]"),
+    headerSettingButton : document.querySelector("[data-header-settings]"),
 }
 
 //ADDS THE BOOKS IN HTML & DISPLAY THEM
@@ -110,14 +111,23 @@ const initializeMoreBooksButton = () => {
           })</span>
       `;
 }
+
 //
 const cancelSearchOverlay =()=> {
     getHtml.searchOverlay.open = false;//CLOSE
 
 }
-
 const calcelSettingOverlay = () => {
     getHtml.settingOverlay.open = false;//CLOSE
+}
+const openSearchOverlay = () => {
+    getHtml.searchOverlay.open = true;//OPEN
+    document.querySelector("[data-search-title]").focus();
+
+}
+const openSettingOverlay = () => {
+    getHtml.settingOverlay.open = true;
+
 }
 
 //ALL CLICKED BUTTONS
@@ -125,24 +135,9 @@ const EventListeners =()=> {
     getHtml.cancelSearchButton.addEventListener('click', cancelSearchOverlay)
     getHtml.cancelSettingButton.addEventListener('click', calcelSettingOverlay)
     getHtml.headerSearchButton.addEventListener('click', openSearchOverlay)
+    getHtml.headerSettingButton.addEventListener('click', openSettingOverlay)
 }
 
-const openSearchOverlay = () => {
-    getHtml.searchOverlay.open = true;
-    document.querySelector("[data-search-title]").focus();
-
-}
-
-// document.querySelector("[data-header-search]").addEventListener("click", () => {
-//   document.querySelector("[data-search-overlay]").open = true;
-//   document.querySelector("[data-search-title]").focus();
-// });
-
-document
-  .querySelector("[data-header-settings]")
-  .addEventListener("click", () => {
-    document.querySelector("[data-settings-overlay]").open = true;
-  });
 
 document.querySelector("[data-list-close]").addEventListener("click", () => {
   document.querySelector("[data-list-active]").open = false;
