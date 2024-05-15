@@ -11,6 +11,7 @@ const getHtml = {
     searchOverlay : document.querySelector("[data-search-overlay]"),
     settingOverlay : document.querySelector("[data-settings-overlay]"),
     cancelSettingButton : document.querySelector("[data-settings-cancel]"),
+    headerSearchButton : document.querySelector("[data-header-search]"),
 }
 
 //ADDS THE BOOKS IN HTML & DISPLAY THEM
@@ -111,25 +112,31 @@ const initializeMoreBooksButton = () => {
 }
 //
 const cancelSearchOverlay =()=> {
-    getHtml.searchOverlay.open = false;
+    getHtml.searchOverlay.open = false;//CLOSE
 
 }
 
 const calcelSettingOverlay = () => {
-    getHtml.settingOverlay.open = false;
+    getHtml.settingOverlay.open = false;//CLOSE
 }
 
 //ALL CLICKED BUTTONS
 const EventListeners =()=> {
     getHtml.cancelSearchButton.addEventListener('click', cancelSearchOverlay)
     getHtml.cancelSettingButton.addEventListener('click', calcelSettingOverlay)
+    getHtml.headerSearchButton.addEventListener('click', openSearchOverlay)
 }
 
+const openSearchOverlay = () => {
+    getHtml.searchOverlay.open = true;
+    document.querySelector("[data-search-title]").focus();
 
-document.querySelector("[data-header-search]").addEventListener("click", () => {
-  document.querySelector("[data-search-overlay]").open = true;
-  document.querySelector("[data-search-title]").focus();
-});
+}
+
+// document.querySelector("[data-header-search]").addEventListener("click", () => {
+//   document.querySelector("[data-search-overlay]").open = true;
+//   document.querySelector("[data-search-title]").focus();
+// });
 
 document
   .querySelector("[data-header-settings]")
