@@ -131,7 +131,7 @@ const openSettingOverlay = () => {
     getHtml.settingOverlay.open = true;
 
 }
-const closeBookPrevious = () => {
+const closeBookPreview = () => {
     getHtml.bookPreview.open = false;
 }
 
@@ -141,7 +141,7 @@ const EventListeners =()=> {
     getHtml.cancelSettingButton.addEventListener('click', calcelSettingOverlay)
     getHtml.headerSearchButton.addEventListener('click', openSearchOverlay)
     getHtml.headerSettingButton.addEventListener('click', openSettingOverlay)
-    getHtml.closePreviousButton.addEventListener('click', closeBookPrevious)
+    getHtml.closePreviousButton.addEventListener('click', closeBookPreview)
 }
 
 
