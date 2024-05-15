@@ -110,19 +110,19 @@ const initializeMoreBooksButton = () => {
       `;
 }
 //
-const cancelSearchOverly =()=> {
+const cancelSearchOverlay =()=> {
     getHtml.searchOverlay.open = false;
 
 }
 
-const calcelSettingOverly = () => {
+const calcelSettingOverlay = () => {
     getHtml.settingOverlay.open = false;
 }
 
 //ALL CLICKED BUTTONS
 const EventListeners =()=> {
-    getHtml.cancelSearchButton.addEventListener('click', cancelSearchOverly)
-    getHtml.cancelSettingButton.addEventListener('click', calcelSettingOverly)
+    getHtml.cancelSearchButton.addEventListener('click', cancelSearchOverlay)
+    getHtml.cancelSettingButton.addEventListener('click', calcelSettingOverlay)
 }
 
 
