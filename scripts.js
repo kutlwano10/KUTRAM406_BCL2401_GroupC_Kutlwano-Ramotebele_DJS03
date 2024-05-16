@@ -16,7 +16,8 @@ const getHtml = {
     closePreviousButton : document.querySelector("[data-list-close]"),
     bookPreview : document.querySelector("[data-list-active]"),
     saveSettingsFormButton : document.querySelector("[data-settings-form]"),
-    saveSearchButton : document.querySelector("[data-search-form]")
+    saveSearchButton : document.querySelector("[data-search-form]"),
+    bookListButton: document.querySelector("[data-list-button]")
 }
 
 //ADDS THE BOOKS IN HTML & DISPLAY THEM
@@ -145,7 +146,9 @@ const EventListeners =()=> {
     getHtml.headerSettingButton.addEventListener('click', openSettingOverlay)
     getHtml.closePreviousButton.addEventListener('click', closeBookPreview)
     getHtml.saveSettingsFormButton.addEventListener('submit', saveSettingsForm),
-    getHtml.saveSearchButton.addEventListener('submit', saveSearchForm)
+    getHtml.saveSearchButton.addEventListener('submit', saveSearchForm),
+    getHtml.bookListButton.addEventListener('click', bookListData),
+    getHtml.dataListItems.addEventListener('click', bookPreviewContent)
 
 }
 
@@ -171,7 +174,7 @@ const saveSettingsForm = (event) => {
 
     getHtml.settingOverlay.open = false;
 }
-
+//SAVES THE INPUTED SEARCH
 const saveSearchForm = (event) => {
     event.preventDefault();
 
@@ -255,41 +258,40 @@ const saveSearchForm = (event) => {
     getHtml.searchOverlay.open = false;
 } 
 
+//BOOK LIST DATA 
+const bookListData = () => {
+    const fragment = document.createDocumentFragment();
 
-  //When button clicked
-document.querySelector("[data-list-button]").addEventListener("click", () => {
-  const fragment = document.createDocumentFragment();
+    for (const { author, id, image, title } of matches.slice(
+      page * BOOKS_PER_PAGE,
+      (page + 1) * BOOKS_PER_PAGE
+    )) {
+      const element = document.createElement("button");
+      element.classList = "preview";
+      element.setAttribute("data-preview", id);
+  
+      element.innerHTML = `
+              <img
+                  class="preview__image"
+                  src="${image}"
+              />
+              
+              <div class="preview__info">
+                  <h3 class="preview__title">${title}</h3>
+                  <div class="preview__author">${authors[author]}</div>
+              </div>
+          `;
+  
+      fragment.appendChild(element);
+    }
+  
+    document.querySelector("[data-list-items]").appendChild(fragment);
+    page += 1;
+    
 
-  for (const { author, id, image, title } of matches.slice(
-    page * BOOKS_PER_PAGE,
-    (page + 1) * BOOKS_PER_PAGE
-  )) {
-    const element = document.createElement("button");
-    element.classList = "preview";
-    element.setAttribute("data-preview", id);
+}
 
-    element.innerHTML = `
-            <img
-                class="preview__image"
-                src="${image}"
-            />
-            
-            <div class="preview__info">
-                <h3 class="preview__title">${title}</h3>
-                <div class="preview__author">${authors[author]}</div>
-            </div>
-        `;
-
-    fragment.appendChild(element);
-  }
-
-  document.querySelector("[data-list-items]").appendChild(fragment);
-  page += 1;
-});
-
-document
-  .querySelector("[data-list-items]")
-  .addEventListener("click", (event) => {
+const bookPreviewContent = (event) => {
     const pathArray = Array.from(event.path || event.composedPath());
     let active = null;
 
@@ -319,7 +321,8 @@ document
       document.querySelector("[data-list-description]").innerText =
         active.description;
     }
-  });
+
+}
 
   const main = () => {
     initializeBooks();
