@@ -149,7 +149,7 @@ const EventListeners =()=> {
     getHtml.closeBookPreviousButton.addEventListener('click', closeBookPreview)
     getHtml.saveSettingsFormButton.addEventListener('submit', saveSettingsForm),
     getHtml.saveSearchButton.addEventListener('submit', saveSearchForm),
-    // getHtml.bookListButton.addEventListener('click', bookListData),
+    getHtml.showMorelistButton.addEventListener('click', moreBooksList),
     getHtml.dataListItems.addEventListener('click', bookPreviewContent)
 
 }
