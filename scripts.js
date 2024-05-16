@@ -6,18 +6,18 @@ let matches = books;
 const getHtml = {
     dataListItems : document.querySelector("[data-list-items]"),
     searchGenre : document.querySelector("[data-search-genres]"),
-    listButton : document.querySelector("[data-list-button]"),
+    showMorelistButton : document.querySelector("[data-list-button]"),
     cancelSearchButton : document.querySelector("[data-search-cancel]"),
     searchOverlay : document.querySelector("[data-search-overlay]"),
     settingOverlay : document.querySelector("[data-settings-overlay]"),
     cancelSettingButton : document.querySelector("[data-settings-cancel]"),
     headerSearchButton : document.querySelector("[data-header-search]"),
     headerSettingButton : document.querySelector("[data-header-settings]"),
-    closePreviousButton : document.querySelector("[data-list-close]"),
+    closeBookPreviousButton : document.querySelector("[data-list-close]"),
     bookPreview : document.querySelector("[data-list-active]"),
     saveSettingsFormButton : document.querySelector("[data-settings-form]"),
     saveSearchButton : document.querySelector("[data-search-form]"),
-    bookListButton: document.querySelector("[data-list-button]")
+    
 }
 
 //ADDS THE BOOKS IN HTML & DISPLAY THEM
@@ -63,9 +63,10 @@ const displayBooksByGenre = () => {
 
   getHtml.searchGenre.appendChild(genreHtml);
 };
-displayBooksByGenre()
+
 //Books by Author
-const authorsHtml = document.createDocumentFragment();
+const displayBooksByAuthor = () => {
+    const authorsHtml = document.createDocumentFragment();
 const firstAuthorElement = document.createElement("option");
 firstAuthorElement.value = "any";
 firstAuthorElement.innerText = "All Authors";
@@ -79,6 +80,7 @@ for (const [id, name] of Object.entries(authors)) {
 }
 
 document.querySelector("[data-search-authors]").appendChild(authorsHtml);
+}
 
 
 //THEME CHANGE
@@ -99,15 +101,15 @@ const changeThemes = () => {
 }
 
 
-const initializeMoreBooksButton = () => {
-    getHtml.listButton.innerText = `Show more (${
+const initializeMoreBooks = () => {
+    getHtml.showMorelistButton.innerText = `Show more (${
         books.length - BOOKS_PER_PAGE
       })`;//show more button
       
-      getHtml.listButton.disabled =
+      getHtml.showMorelistButton.disabled =
         matches.length - page * BOOKS_PER_PAGE > 0;
       
-      getHtml.listButton.innerHTML = `
+      getHtml.showMorelistButton.innerHTML = `
           <span>Show more</span>
           <span class="list__remaining"> (${
             matches.length - page * BOOKS_PER_PAGE > 0
@@ -144,10 +146,10 @@ const EventListeners =()=> {
     getHtml.cancelSettingButton.addEventListener('click', calcelSettingOverlay)
     getHtml.headerSearchButton.addEventListener('click', openSearchOverlay)
     getHtml.headerSettingButton.addEventListener('click', openSettingOverlay)
-    getHtml.closePreviousButton.addEventListener('click', closeBookPreview)
+    getHtml.closeBookPreviousButton.addEventListener('click', closeBookPreview)
     getHtml.saveSettingsFormButton.addEventListener('submit', saveSettingsForm),
     getHtml.saveSearchButton.addEventListener('submit', saveSearchForm),
-    getHtml.bookListButton.addEventListener('click', bookListData),
+    // getHtml.bookListButton.addEventListener('click', bookListData),
     getHtml.dataListItems.addEventListener('click', bookPreviewContent)
 
 }
@@ -253,13 +255,13 @@ const saveSearchForm = (event) => {
             : 0
         })</span>
     `;
-
+    
     window.scrollTo({ top: 0, behavior: "smooth" });
     getHtml.searchOverlay.open = false;
 } 
 
 //BOOK LIST DATA 
-const bookListData = () => {
+const moreBooksList = () => {
     const fragment = document.createDocumentFragment();
 
     for (const { author, id, image, title } of matches.slice(
@@ -326,7 +328,9 @@ const bookPreviewContent = (event) => {
 
   const main = () => {
     initializeBooks();
-    initializeMoreBooksButton();
+    initializeMoreBooks();
     EventListeners()
+    displayBooksByGenre()
+    displayBooksByAuthor()
   }
   main()
