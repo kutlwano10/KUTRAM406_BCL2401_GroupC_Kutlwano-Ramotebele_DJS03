@@ -19,7 +19,10 @@ const getHtml = {
   saveSearchButton: document.querySelector("[data-search-form]"),
 };
 
-//ADDS THE BOOKS IN HTML & DISPLAY THEM
+
+/**
+ * Adds the book in HTML and Displays the Book
+ */
 const initializeBooks = () => {
   const starting = document.createDocumentFragment(); //it allows multiple inserts at the same time on the DOM
   for (const { author, id, image, title } of matches.slice(0, BOOKS_PER_PAGE)) {
@@ -44,7 +47,9 @@ const initializeBooks = () => {
   getHtml.dataListItems.appendChild(starting);
 };
 
-//Books by Genre
+/**
+ * Handles book by Genre
+ */
 const displayBooksByGenre = () => {
   const genreHtml = document.createDocumentFragment(); //it doesnt have a child but it exist
   const firstGenreElement = document.createElement("option");
@@ -62,7 +67,9 @@ const displayBooksByGenre = () => {
   getHtml.searchGenre.appendChild(genreHtml);
 };
 
-//Books by Author
+/**
+ * Handles Book by Author
+ */
 const displayBooksByAuthor = () => {
   const authorsHtml = document.createDocumentFragment();
   const firstAuthorElement = document.createElement("option");
@@ -80,6 +87,9 @@ const displayBooksByAuthor = () => {
   document.querySelector("[data-search-authors]").appendChild(authorsHtml);
 };
 
+/**
+ * Handles more Books
+ */
 const initializeMoreBooks = () => {
   getHtml.showMorelistButton.innerText = `Show more (${
     books.length - BOOKS_PER_PAGE
@@ -115,7 +125,9 @@ const closeBookPreview = () => {
   getHtml.bookPreview.open = false;
 };
 
-//ALL CLICKED BUTTONS
+/**
+ * All Clicked buttons
+ */
 const EventListeners = () => {
   getHtml.cancelSearchButton.addEventListener("click", cancelSearchOverlay);
   getHtml.cancelSettingButton.addEventListener("click", calcelSettingOverlay);
@@ -124,10 +136,14 @@ const EventListeners = () => {
   getHtml.closeBookPreviousButton.addEventListener("click", closeBookPreview);
   getHtml.saveSettingsFormButton.addEventListener("submit", saveSettingsForm),
     getHtml.saveSearchButton.addEventListener("submit", saveSearchForm),
-    getHtml.showMorelistButton.addEventListener("click", moreBooksList),
+    getHtml.showMorelistButton.addEventListener("click", generateMoreBooksList),
     getHtml.dataListItems.addEventListener("click", bookPreviewContent);
 };
 
+/**
+ * 
+ * Handle Saving The Setting form
+ */
 const saveSettingsForm = (event) => {
   event.preventDefault();
 
@@ -144,7 +160,7 @@ const saveSettingsForm = (event) => {
       "255, 255, 255"
     );
   }
-
+  
   getHtml.settingOverlay.open = false;
 };
 const changeThemes = () => {
@@ -164,6 +180,8 @@ const changeThemes = () => {
     );
   }
 };
+
+
 //SAVES THE INPUTED SEARCH
 const saveSearchForm = (event) => {
   event.preventDefault();
@@ -245,8 +263,10 @@ const saveSearchForm = (event) => {
   getHtml.searchOverlay.open = false;
 };
 
-//BOOK LIST DATA
-const moreBooksList = () => {
+/**
+ * Handles Generating more Books When ShowMoreBtn is clicked
+ */
+const generateMoreBooksList = () => {
   const fragment = document.createDocumentFragment();
 
   for (const { author, id, image, title } of matches.slice(
